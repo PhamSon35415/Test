@@ -6,6 +6,8 @@
 package DuAn.utils;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,19 +15,43 @@ import java.sql.*;
  */
 public class DBConnect {
 
-    private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static String dburl = "jdbc:sqlserver://localhost;database=Du_An_Mau";
-    private static String username = "sa";
-    private static String password = "123456789";
+    private static final String USERNAME = "sa";
+    private static final String PASSWORD = "123456789";
+    private static final String SERVER = "localhost";
+    private static final String PORT = "1433";
+    private static final String DATABASE_NAME = "Du_An_Mau";
+    private static final boolean USING_SSL = true;
 
-    /*
-    * Nạp driver
-     */
+    private static String CONNECT_STRING;
+
     static {
         try {
-            Class.forName(driver);
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+
+            StringBuilder connectStringBuilder = new StringBuilder();
+            connectStringBuilder.append("jdbc:sqlserver://")
+                    .append(SERVER).append(":").append(PORT).append(";")
+                    .append("databaseName=").append(DATABASE_NAME).append(";")
+                    .append("user=").append(USERNAME).append(";")
+                    .append("password=").append(PASSWORD).append(";");
+            if (USING_SSL) {
+                connectStringBuilder.append("encrypt=true;trustServerCertificate=true;");
+            }
+            CONNECT_STRING = connectStringBuilder.toString();
+            System.out.println("Connect String có dạng: " + CONNECT_STRING);
         } catch (ClassNotFoundException ex) {
-            throw new RuntimeException(ex);
+            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static Connection getConnection() {
+        try {
+
+            return DriverManager.getConnection(CONNECT_STRING);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 
@@ -38,9 +64,7 @@ public class DBConnect {
      */
     //obj.getStmt("insert into HocVien values (?,?,?,?)","hv01","java","kh01",8.0)
     public static PreparedStatement getStmt(String sql, Object... args) throws SQLException {
-
-        Connection connection = DriverManager.getConnection(dburl, username, password);
-
+        Connection connection = getConnection();
         PreparedStatement pstmt = null;
         if (sql.trim().startsWith("{")) {           //goi thủ tục lưu trữ
             pstmt = connection.prepareCall(sql);  //(store procedure)
@@ -51,6 +75,15 @@ public class DBConnect {
             pstmt.setObject(i + 1, args[i]); // ps.setString(1, hv.gẹtHoTen());
         }
         return pstmt;
+    }
+
+    public static void main(String[] args) throws Exception {
+        Connection conn = getConnection();
+        DatabaseMetaData dbmt = conn.getMetaData();
+        System.out.println(dbmt.getDriverName());
+        System.out.println(dbmt.getDatabaseProductName());
+        System.out.println(dbmt.getDatabaseProductVersion());
+
     }
 
     /*
