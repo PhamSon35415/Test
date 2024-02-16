@@ -46,7 +46,7 @@ public class Chao_Dialog extends javax.swing.JDialog {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("CAO ĐẲNG FPT POLYTECHNICH - ĐÀ NẴNG XIN CHÀO");
+        jLabel2.setText("Đự Ám Mẫu");
 
         progressBar.setToolTipText("");
         progressBar.setStringPainted(true);
@@ -144,10 +144,10 @@ public class Chao_Dialog extends javax.swing.JDialog {
                   try {
                       i++;
                       progressBar.setValue(i);
-                      if(i==20)lblStatus.setText("Đang khởi tạo cái modun...");
+                      if(i==20)lblStatus.setText("Đang khởi tạo...");
                       if(i==50)lblStatus.setText("Đang kết nối CSDL...");
                       if(i==70)lblStatus.setText("Chuẩn bị vào chương trình...");
-                      if(i==90)lblStatus.setText("Thành công !");
+                      if(i==90)lblStatus.setText("OK!");
                       if(i==100){
                          Chao_Dialog.this.dispose();   //đóng ChaoJDialog
                          break; 

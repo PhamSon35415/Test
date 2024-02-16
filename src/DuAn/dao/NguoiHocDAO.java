@@ -18,7 +18,7 @@ public class NguoiHocDAO extends EduSysDAO<NguoiHoc, String>{
 
     @Override
     public void insert(NguoiHoc model) {
-        String sql="INSERT INTO NguoiHoc (MaNH, HoTen, NgaySinh, GioiTinh, DienThoai, Email, GhiChu, MaNV)"
+        String sql="INSERT INTO NguoiHoc (HoTen, NgaySinh, GioiTinh, DienThoai, Email, GhiChu, MaNv)"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         DBConnect.update(sql, 
         model.getMaNH(), 
@@ -33,8 +33,8 @@ public class NguoiHocDAO extends EduSysDAO<NguoiHoc, String>{
 
     @Override
     public void update(NguoiHoc model) {
-        String sql="UPDATE NguoiHoc SET HoTen=?, NgaySinh=?, GioiTinh=?, DienThoai=?, Email=?, GhiChu=?, MaNV=?"
-                + " WHERE MaNH=?";
+        String sql="UPDATE NguoiHoc SET HoTen=?, NgaySinh=?, GioiTinh=?, DienThoai=?, Email=?, GhiChu=?, MaNv=?"
+                + " WHERE MaNh=?";
         DBConnect.update(sql, 
         model.getHoTen(), 
         model.getNgaySinh(), 
@@ -48,19 +48,19 @@ public class NguoiHocDAO extends EduSysDAO<NguoiHoc, String>{
 
     @Override
     public void delete(String MaNH) {
-        String sql = "DELETE FROM NguoiHoc WHERE MaNH = ?";
+        String sql = "DELETE FROM NguoiHoc WHERE MaNh = ?";
         DBConnect.update(sql, MaNH);
     }
 
      @Override
     public List<NguoiHoc> selectAll() {
-        String sql = "Select * from NguoiHoc";
+        String sql = "select MaNh, HoTen, NgaySinh, GioiTinh, DienThoai, Email, GhiChu, MaNv, NgayDk from NguoiHoc";
         return selectBySql(sql);
     }
     
     @Override
     public NguoiHoc selectById(String MaNH) {
-        String sql = "SELECT * FROM NguoiHoc WHERE MaNH=?";
+        String sql = "select MaNh, HoTen, NgaySinh, GioiTinh, DienThoai, Email, GhiChu, MaNv, NgayDk from NguoiHoc WHERE MaNh=?";
         List<NguoiHoc> list = selectBySql(sql, MaNH);
         return list.size() > 0 ? list.get(0) : null;
     }
@@ -97,14 +97,14 @@ public class NguoiHocDAO extends EduSysDAO<NguoiHoc, String>{
     }
     
     public List<NguoiHoc> selectByKeyword(String keyword){ //tìm kiếm người học theo từ khóa
-        String sql = "SELECT * FROM NguoiHoc WHERE Hoten LIKE ?";
+        String sql = "select MaNh, HoTen, NgaySinh, GioiTinh, DienThoai, Email, GhiChu, MaNv, NgayDk from NguoiHoc WHERE HoTen LIKE ?";
         return this.selectBySql(sql, "%" + keyword + "%");
     }
     
     public List<NguoiHoc> selectNotInCourse(int maKH,String keyword){  // Những người không tham gia vào khóa học
-        String sql = "SELECT * FROM NguoiHoc"
+        String sql = "select MaNh, HoTen, NgaySinh, GioiTinh, DienThoai, Email, GhiChu, MaNv, NgayDk from NguoiHoc"
         + " WHERE HoTen LIKE ? AND "
-        + "MaNH NOT IN (SELECT MaNH FROM HocVien WHERE MaKH=?)";
+        + "MaNh NOT IN (SELECT MaNh FROM HocVien WHERE MaKh=?)";
         return this.selectBySql(sql, "%"+ keyword+ "%",maKH);
     }
     

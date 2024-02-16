@@ -33,7 +33,7 @@ public class QLNgHoc_FR extends javax.swing.JFrame {
         setIcon();
         init();
     }
-    
+
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("fpt.png")));
     }
@@ -231,7 +231,7 @@ public class QLNgHoc_FR extends javax.swing.JFrame {
                                                 .addComponent(lblNgaySinh)
                                                 .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addComponent(lblMaNguoiHoc, javax.swing.GroupLayout.Alignment.LEADING)))))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlEditLayout.setVerticalGroup(
             pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -395,14 +395,14 @@ public class QLNgHoc_FR extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbNguoiHocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbNguoiHocMouseClicked
-        if (evt.getClickCount()==1) {
+        if (evt.getClickCount() == 1) {
             this.row = tbNguoiHoc.getSelectedRow();
             this.edit();
         }
     }//GEN-LAST:event_tbNguoiHocMouseClicked
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
-       this.timKiem();
+        this.timKiem();
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -410,21 +410,21 @@ public class QLNgHoc_FR extends javax.swing.JFrame {
             if (checkTrungMa(txtMaNH)) {
                 insert();
             }
-        }else {
+        } else {
             MsgBox.showMessageDialog(this, "Bạn chưa nhập đầy đủ thông tin");
-        } 
+        }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         if (validateForm()) {
             this.update();
-        }else{
+        } else {
             MsgBox.showMessageDialog(this, "Bạn chưa nhập đầy đủ thông tin !");
         }
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-       this.delete();
+        this.delete();
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
@@ -461,11 +461,11 @@ public class QLNgHoc_FR extends javax.swing.JFrame {
             return true;
         } else {
             txt.setBackground(Color.pink);
-            MsgBox.showMessageDialog(this,"Mã người học "+ txt.getText()+ " đã tồn tại");
+            MsgBox.showMessageDialog(this, "Mã người học " + txt.getText() + " đã tồn tại");
             return false;
         }
     }
-    
+
     public boolean validateForm() {
         if (txtMaNH.getText().isEmpty() || txtHoTen.getText().isEmpty() || txtNgaySinh.getText().isEmpty() || txtEmail.getText().isEmpty()
                 || txtSDT.getText().isEmpty()) {
@@ -473,6 +473,7 @@ public class QLNgHoc_FR extends javax.swing.JFrame {
         }
         return true;
     }
+
     /**
      * @param args the command line arguments
      */
@@ -547,17 +548,19 @@ public class QLNgHoc_FR extends javax.swing.JFrame {
     private javax.swing.JTextField txtSDT;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
-    
+
     int row = -1;
-    void init(){
+
+    void init() {
         this.fillTable();
         this.updateStatus();
     }
-    
+
     NguoiHocDAO dao = new NguoiHocDAO();
-       void fillTable(){
-    //tìm kiếm người học theo keyword rồi đổ list người học vào bảng
-    //nếu không có keywork trong ô tìm kiếm thì đổ toàn bộ người học trong CSDL vào bảng
+
+    void fillTable() {
+        //tìm kiếm người học theo keyword rồi đổ list người học vào bảng
+        //nếu không có keywork trong ô tìm kiếm thì đổ toàn bộ người học trong CSDL vào bảng
         DefaultTableModel model = (DefaultTableModel) tbNguoiHoc.getModel();
         model.setRowCount(0);
         try {
@@ -569,38 +572,40 @@ public class QLNgHoc_FR extends javax.swing.JFrame {
                 Object[] row = {
                     nh.getMaNH(),
                     nh.getHoTen(),
-                    nh.isGioiTinh()?"Nam":"Nữ",
-                    XDate.toString(nh.getNgaySinh(),"dd/MM/yyyy"),
+                    nh.isGioiTinh() ? "Nam" : "Nữ",
+                    XDate.toString(nh.getNgaySinh(), "dd/MM/yyyy"),
                     nh.getDienThoai(),
                     nh.getEmail(),
                     nh.getMaNV(),
-                    XDate.toString(nh.getNgayDK(),"dd/MM/yyyy")
+                    XDate.toString(nh.getNgayDK(), "dd/MM/yyyy")
                 };
                 model.addRow(row);
             }
         } catch (Exception e) {
             MsgBox.showMessageDialog(this, "Lỗi truy vấn dữ liệu");
         }
-    } 
-       
-    void setForm(NguoiHoc nh){//điền thông tin từ đối tượng nguoiHoc lên form
+    }
+
+    void setForm(NguoiHoc nh) {//điền thông tin từ đối tượng nguoiHoc lên form
         txtMaNH.setText(nh.getMaNH());
         txtHoTen.setText(nh.getHoTen());
         if (nh.isGioiTinh()) {
             rdoNam.setSelected(true);
-        }else{
+        } else {
             rdoNu.setSelected(true);
         }
-        txtNgaySinh.setText(XDate.toString(nh.getNgaySinh(),"dd/MM/yyyy"));
+        txtNgaySinh.setText(XDate.toString(nh.getNgaySinh(), "dd/MM/yyyy"));
         txtSDT.setText(nh.getDienThoai());
         txtEmail.setText(nh.getEmail());
         txtGhiChu.setText(nh.getGhiChu());
     }
-     
-      NguoiHoc getForm(){
-    //lấy thông trên form  cho vào đối tượng nguoiHoc
-    //return nguoiHoc
+
+    NguoiHoc getForm() {
+        //lấy thông trên form  cho vào đối tượng nguoiHoc
+        //return nguoiHoc
         NguoiHoc nh = new NguoiHoc();
+        int index = tbNguoiHoc.getSelectedRow();
+
         nh.setMaNH(txtMaNH.getText());
         nh.setHoTen(txtHoTen.getText());
         nh.setGioiTinh(rdoNam.isSelected());
@@ -608,11 +613,12 @@ public class QLNgHoc_FR extends javax.swing.JFrame {
         nh.setDienThoai(txtSDT.getText());
         nh.setEmail(txtEmail.getText());
         nh.setGhiChu(txtGhiChu.getText());
-        nh.setMaNV(Auth.user.getMaNV());
+        nh.setMaNV(String.valueOf(tbNguoiHoc.getValueAt(index, 0)));
         nh.setNgayDK(new Date());
         return nh;
     }
-    void clearForm(){//xóa trắng form
+
+    void clearForm() {//xóa trắng form
         NguoiHoc nh = new NguoiHoc();
         this.row = -1;
         this.updateStatus();
@@ -623,9 +629,8 @@ public class QLNgHoc_FR extends javax.swing.JFrame {
         txtMaNH.setBackground(white);
 //        nh.setNgaySinh(XDate.toDate("01/01/2010", "dd/MM/yyyy"));
     }
-    
-    
-    void edit(){
+
+    void edit() {
         //lấy manh theo index, lấy đt nguohoc từ CSDL theo manh 
         //hiển thị thông tin từ đt chuyenDe lên form, chuyển sang edit form        
         String manh = (String) tbNguoiHoc.getValueAt(this.row, 0);
@@ -634,107 +639,105 @@ public class QLNgHoc_FR extends javax.swing.JFrame {
         this.updateStatus();
         tabs.setSelectedIndex(0);
     }
-    
-    void updateStatus(){//cập nhật trạng thái form
-          boolean edit = (this.row >= 0); //đang chọn một hàng nào đó ->> trạng thái edit
-          boolean first = (this.row == 0); //đang ở bản ghi đầu tiên 
-          boolean last = (this.row == tbNguoiHoc.getRowCount() - 1); // đang ở bản ghi cuối cùng    
-          
-          //trạng thái form
-          txtMaNH.setEditable(!edit); 
-          btnThem.setEnabled(!edit);
-          btnSua.setEnabled(edit);
-          btnXoa.setEnabled(edit);
-          
-          //trạng thái điều hướng 
-          btnFirts.setEnabled(edit && !first);
-          btnPrev.setEnabled(edit && !first);
-          btnNext.setEnabled(edit && !last);
-          btnLast.setEnabled(edit && !last);
-      }
-    
-    void first(){
-          this.row = 0;
-          this.edit();
+
+    void updateStatus() {//cập nhật trạng thái form
+        boolean edit = (this.row >= 0); //đang chọn một hàng nào đó ->> trạng thái edit
+        boolean first = (this.row == 0); //đang ở bản ghi đầu tiên 
+        boolean last = (this.row == tbNguoiHoc.getRowCount() - 1); // đang ở bản ghi cuối cùng    
+
+        //trạng thái form
+        txtMaNH.setEditable(!edit);
+        btnThem.setEnabled(!edit);
+        btnSua.setEnabled(edit);
+        btnXoa.setEnabled(edit);
+
+        //trạng thái điều hướng 
+        btnFirts.setEnabled(edit && !first);
+        btnPrev.setEnabled(edit && !first);
+        btnNext.setEnabled(edit && !last);
+        btnLast.setEnabled(edit && !last);
     }
-    
-    void prev(){
-          if (this.row > 0) {
-              this.row--;
-              this.edit();
-          }
+
+    void first() {
+        this.row = 0;
+        this.edit();
     }
-      
-    void next(){
-           if (this.row < tbNguoiHoc.getRowCount() - 1) {
-              this.row++;
-              this.edit();
-          } 
+
+    void prev() {
+        if (this.row > 0) {
+            this.row--;
+            this.edit();
+        }
     }
-    
-    void last(){
-           this.row = tbNguoiHoc.getRowCount() -1 ;
-           this.edit();
+
+    void next() {
+        if (this.row < tbNguoiHoc.getRowCount() - 1) {
+            this.row++;
+            this.edit();
+        }
     }
-    
-    private void timKiem(){//tìm kiếm người học theo keyword
+
+    void last() {
+        this.row = tbNguoiHoc.getRowCount() - 1;
+        this.edit();
+    }
+
+    private void timKiem() {//tìm kiếm người học theo keyword
         this.fillTable();
         this.clearForm();
         this.row = -1;
         this.updateStatus();
     }
-       
-    void insert(){
-    //lấy thông tin trên form để
-    //thêm 1 nguoiHoc mới vào CSDL
-          NguoiHoc model = getForm();
-          try {
-              dao.insert(model);
-              this.fillTable();
-              this.clearForm();
-              MsgBox.showMessageDialog(this, "Thêm mới người học thành công");
-          } catch (Exception e) {
-              MsgBox.showMessageDialog(this, "Thêm mới người học thất bại !");
-              e.printStackTrace();
-          }
-      }
 
-      void update(){
-    //lấy thông tin trên form
-    //để chỉnh sửa nguoiHoc trong CSDL theo maNH
-          NguoiHoc model = getForm();
-          try {
-              dao.update(model);
-              this.fillTable();
-              this.clearForm();
-              MsgBox.showMessageDialog(this, "Cập nhật người học thành công");
-          } catch (Exception e) {
-              MsgBox.showMessageDialog(this, "Cập nhật người học thất bại !");
-              e.printStackTrace();
-          }
-      }
-      
-      void delete(){
-    //xóa bản ghi khỏi CSDL theo maNH lấy trên form
-    //xóa trằng form    
-          if (!Auth.isManager()) {//kiểm tra nếu kh phải trưởng phòng thì kh được xóa
-              MsgBox.showMessageDialog(this, "Bạn không có quyền xóa người học !");
-          }else{
-              if (MsgBox.showConfirmDialog(this, "Bạn có muốn xóa người học này không ?")) {
-                  String macd = txtMaNH.getText();
-                  try {
-                      dao.delete(macd);
-                      this.fillTable();
-                      this.clearForm();
-                      MsgBox.showMessageDialog(this, "Xóa người học thành công");
-                  } catch (Exception e) {
-                      MsgBox.showMessageDialog(this, "Không thể xóa người học ");
-                      e.printStackTrace();
-                  }
-              }
-          }
-      }
-      
-      
-      
+    void insert() {
+        //lấy thông tin trên form để
+        //thêm 1 nguoiHoc mới vào CSDL
+        NguoiHoc model = getForm();
+        try {
+            dao.insert(model);
+            this.fillTable();
+            this.clearForm();
+            MsgBox.showMessageDialog(this, "Thêm mới người học thành công");
+        } catch (Exception e) {
+            MsgBox.showMessageDialog(this, "Thêm mới người học thất bại !");
+            e.printStackTrace();
+        }
+    }
+
+    void update() {
+        //lấy thông tin trên form
+        //để chỉnh sửa nguoiHoc trong CSDL theo maNH
+        NguoiHoc model = getForm();
+        try {
+            dao.update(model);
+            this.fillTable();
+            this.clearForm();
+            MsgBox.showMessageDialog(this, "Cập nhật người học thành công");
+        } catch (Exception e) {
+            MsgBox.showMessageDialog(this, "Cập nhật người học thất bại !");
+            e.printStackTrace();
+        }
+    }
+
+    void delete() {
+        //xóa bản ghi khỏi CSDL theo maNH lấy trên form
+        //xóa trằng form    
+        if (!Auth.isManager()) {//kiểm tra nếu kh phải trưởng phòng thì kh được xóa
+            MsgBox.showMessageDialog(this, "Bạn không có quyền xóa người học !");
+        } else {
+            if (MsgBox.showConfirmDialog(this, "Bạn có muốn xóa người học này không ?")) {
+                String macd = txtMaNH.getText();
+                try {
+                    dao.delete(macd);
+                    this.fillTable();
+                    this.clearForm();
+                    MsgBox.showMessageDialog(this, "Xóa người học thành công");
+                } catch (Exception e) {
+                    MsgBox.showMessageDialog(this, "Không thể xóa người học ");
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 }

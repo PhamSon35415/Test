@@ -45,13 +45,13 @@ public class NhanVienDAO extends EduSysDAO<NhanVien, String>{
 
     @Override
     public List<NhanVien> selectAll() {
-        String sql = "Select * from NhanVien";
+        String sql = "select MaNv, MatKhau, HoTen, VaiTro from NhanVien";
         return this.selectBySql(sql);
     }
     
     @Override
     public NhanVien selectById(String MaNV) {
-        String sql = "SELECT * FROM NhanVien WHERE MaNV=?";
+        String sql = "select MaNv, MatKhau, HoTen, VaiTro from NhanVien WHERE MaNv=?";
         List<NhanVien> list = selectBySql(sql, MaNV);
         return list.size() > 0 ? list.get(0) : null;
     }
@@ -77,7 +77,7 @@ public class NhanVienDAO extends EduSysDAO<NhanVien, String>{
             }
         } 
         catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            
         }
         return list;  
     }

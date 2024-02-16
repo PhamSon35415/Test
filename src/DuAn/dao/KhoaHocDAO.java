@@ -19,7 +19,7 @@ public class KhoaHocDAO extends EduSysDAO<KhoaHoc, Integer>{
 
     @Override
     public void insert(KhoaHoc model) {
-        String sql="INSERT INTO KhoaHoc (MaCD, HocPhi, ThoiLuong, NgayKG, GhiChu, MaNV) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql="INSERT INTO KhoaHoc (MaCd, HocPhi, ThoiLuong, NgayKg, GhiChu, MaNv) VALUES (?, ?, ?, ?, ?, ?)";
         DBConnect.update(sql, 
         model.getMaCD(), 
         model.getHocPhi(), 
@@ -31,7 +31,7 @@ public class KhoaHocDAO extends EduSysDAO<KhoaHoc, Integer>{
 
     @Override
     public void update(KhoaHoc model) {
-        String sql="UPDATE KhoaHoc SET MaCD=?, HocPhi=?, ThoiLuong=?, NgayKG=?, GhiChu=?, MaNV=? WHERE MaKH=?";
+        String sql="UPDATE KhoaHoc SET MaCd=?, HocPhi=?, ThoiLuong=?, NgayKg=?, GhiChu=?, MaNv=? WHERE MaKh=?";
         DBConnect.update(sql, 
         model.getMaCD(), 
         model.getHocPhi(), 
@@ -44,19 +44,19 @@ public class KhoaHocDAO extends EduSysDAO<KhoaHoc, Integer>{
 
     @Override
     public void delete(Integer MaKH) {
-        String sql="DELETE FROM KhoaHoc WHERE MaKH=?";
+        String sql="DELETE FROM KhoaHoc WHERE MaKh=?";
         DBConnect.update(sql, MaKH);    
     }
 
     @Override
     public List<KhoaHoc> selectAll() {
-        String sql="SELECT * FROM KhoaHoc";
+        String sql="select MaKh,MaCd, HocPhi, ThoiLuong, NgayKg, GhiChu, MaNv, NgayTao from KhoaHoc";
         return selectBySql(sql); 
     }
     
     @Override
     public KhoaHoc selectById(Integer MaKH) {
-        String sql = "SELECT * FROM KhoaHoc WHERE MaKH=?";
+        String sql = "select MaKh, MaCd, HocPhi, ThoiLuong, NgayKg, GhiChu, MaNv, NgayTao from KhoaHoc WHERE MaKh=?";
         List<KhoaHoc> list = selectBySql(sql, MaKH);
         return list.size() > 0 ? list.get(0) : null;   
     }
@@ -70,14 +70,14 @@ public class KhoaHocDAO extends EduSysDAO<KhoaHoc, Integer>{
                 rs = DBConnect.query(sql, args);
                 while(rs.next()){
                     KhoaHoc entity=new KhoaHoc();
-                    entity.setMaKH(rs.getInt("MaKH"));
+                    entity.setMaKH(rs.getInt("MaKh"));
                     entity.setHocPhi(rs.getDouble("HocPhi"));
                     entity.setThoiLuong(rs.getInt("ThoiLuong"));
-                    entity.setNgayKG(rs.getDate("NgayKG"));
+                    entity.setNgayKG(rs.getDate("NgayKg"));
                     entity.setGhiChu(rs.getString("GhiChu"));
-                    entity.setMaNV(rs.getString("MaNV"));
+                    entity.setMaNV(rs.getString("MaNv"));
                     entity.setNgayTao(rs.getDate("NgayTao"));
-                    entity.setMaCD(rs.getString("MaCD"));
+                    entity.setMaCD(rs.getString("MaCd"));
                     list.add(entity);
                 }
             }
@@ -97,7 +97,7 @@ public class KhoaHocDAO extends EduSysDAO<KhoaHoc, Integer>{
     }
     
     public List<Integer> selectYears(){  //liệt kê những khóa học trong một năm
-        String sql= "Select DiSTINCT year(NgayKG) Year From KhoaHoc ORDER BY Year DESC";
+        String sql= "Select DiSTINCT year(NgayKg) Year From KhoaHoc ORDER BY Year DESC";
         List<Integer> list = new ArrayList<>();
         try {
             ResultSet rs = DBConnect.query(sql);

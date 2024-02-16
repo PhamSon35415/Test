@@ -12,14 +12,7 @@ import DuAn.entity.NhanVien;
  * @author asus
  */
 public class Auth {
-    /**
-     * Đối tượng này chứa thông tin người sử dụng sau khi đăng nhập
-     */
     public static NhanVien user = null; //người dùng chưa login
-    
-    /**Xóa thông tin của người dùng khi có yêu cầu đăng xuất
-     * 
-     */
     public static void clear(){//log out
         Auth.user = null;
     }

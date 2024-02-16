@@ -382,7 +382,7 @@ public class TongHopThongKe_Frame extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tbDiemChuyenDe.getModel();
         model.setRowCount(0);
         List<Object[]> list = tkdao.getDiemTheoChuyenDe();//gọi store procedure sp_DiemChuyenDe 
-            for (Object[] row : list) {//cho vòng lặp duyệt qua mảng líst
+            for (Object[] row : list) {//cho vòng lặp duyệt qua mảng list
             model.addRow(new Object[]{row[0], row[1], row[2], row[3],row[4]});
         }
     }

@@ -79,7 +79,7 @@
           <Font name="Tahoma" size="18" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="CAO &#x110;&#x1eb2;NG FPT POLYTECHNICH - &#x110;&#xc0; N&#x1eb4;NG XIN CH&#xc0;O"/>
+        <Property name="text" type="java.lang.String" value="&#x110;&#x1ef1; &#xc1;m M&#x1eab;u"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JProgressBar" name="progressBar">

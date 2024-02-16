@@ -19,7 +19,7 @@ public class ChuyenDeDAO extends EduSysDAO<ChuyenDe, String>{
 //ma chuyen de: string --> key --> search
     @Override
     public void insert(ChuyenDe model) {
-        String sql="INSERT INTO ChuyenDe (MaCD, TenCD, HocPhi, ThoiLuong, Hinh, MoTa) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql="insert into ChuyenDe (MaCd, TenCd, HocPhi, ThoiLuong, Hinh, MoTa) values (?,?,?,?,?,?)";
         DBConnect.update(sql, 
         model.getMaCD(), 
         model.getTenCD(), 
@@ -31,7 +31,7 @@ public class ChuyenDeDAO extends EduSysDAO<ChuyenDe, String>{
 
     @Override
     public void update(ChuyenDe model) {
-        String sql="UPDATE ChuyenDe SET TenCD=?, HocPhi=?, ThoiLuong=?, Hinh=?, MoTa=? WHERE MaCD=?";
+        String sql="update ChuyenDe set TenCd=?, HocPhi=?, ThoiLuong=?, Hinh=?, MoTa=? where MaCd like ?";
         DBConnect.update(sql, 
         model.getTenCD(), 
         model.getHocPhi(), 
@@ -43,19 +43,19 @@ public class ChuyenDeDAO extends EduSysDAO<ChuyenDe, String>{
 
     @Override
     public void delete(String MaCD) {
-        String sql="DELETE FROM ChuyenDe WHERE MaCD=?";
+        String sql="delete ChuyenDe where MaCd like ?";
         DBConnect.update(sql, MaCD); 
     }
 
      @Override
     public List<ChuyenDe> selectAll() {
-        String sql="SELECT * FROM ChuyenDe";
+        String sql="select MaCd, TenCd, HocPhi, ThoiLuong, Hinh, MoTa from ChuyenDe";
         return selectBySql(sql);
     }
     
     @Override
     public ChuyenDe selectById(String maCD) {
-        String sql = "SELECT * FROM ChuyenDe WHERE MaCD=?";
+        String sql = "select MaCd, TenCd, HocPhi, ThoiLuong, Hinh, MoTa from ChuyenDe WHERE MaCd=?";
         List<ChuyenDe> list = selectBySql(sql, maCD);
         return list.size() > 0 ? list.get(0) : null;
     }
